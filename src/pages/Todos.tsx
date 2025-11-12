@@ -97,30 +97,28 @@ const TodosPage = () => {
         </div>
       </div>
       <div className="my-20 space-y-6">
-        {data.data.length ? (
-          data.data.map(
-            ({
-              id,
-              attributes,
-            }: {
-              id: number;
-              attributes: { title: string };
-            }) => {
-              return (
-                <div
-                  key={id}
-                  className="flex items-center justify-between hover:bg-gray-100 duration-300 p-3 rounded-md even:bg-gray-100"
-                >
-                  <h3 className="w-full font-semibold">
-                    {id} - {attributes.title}
-                  </h3>
-                </div>
-              );
-            }
-          )
-        ) : (
-          <h3>No Todos Yet</h3>
-        )}
+     {data?.data && data.data.length > 0 ? (
+  data.data.map((todo: any) => {
+    const title =
+      // لو Strapi style
+      todo?.attributes?.title
+      // أو API عادي
+      ?? todo?.title
+      // افتراضي لو ما لقينا شيء
+      ?? "No title";
+
+    return (
+      <div key={todo.id} className="flex items-center justify-between hover:bg-gray-100 duration-300 p-3 rounded-md even:bg-gray-100">
+        <h3 className="w-full font-semibold">
+          {todo.id}{title}
+        </h3>
+      </div>
+    );
+  })
+) : (
+  <h3>No Todos Yet</h3>
+)}
+
         <Paginator
           isLoading={isLoading || isFetching}
           total={data.meta.pagination.total}

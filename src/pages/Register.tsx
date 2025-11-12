@@ -3,14 +3,15 @@ import Input from "../components/ui/Input";
 import { useForm, SubmitHandler } from "react-hook-form";
 import InputErrorMessage from "../components/ui/InputErrorMessage";
 import { REGISTER_FORM } from "../data/index";
-import { registerSchema } from "../validation/index";
-import { yupResolver } from "@hookform/resolvers/yup";
+
 import axiosInstance from "../config/axios.config";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { IErrorResponse } from "../interfaces";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { registerSchema } from "../validation";
 interface IFormInput {
   username: string;
   email: string;
@@ -22,7 +23,7 @@ const RegisterPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }, 
   } = useForm<IFormInput>({
     resolver: yupResolver(registerSchema),
   });
@@ -35,7 +36,7 @@ const RegisterPage = () => {
     try {
       //  * 2 - Fulfilled => SUCCESS => (OPTIONAL)
 
-      const { status } = await axiosInstance.post("/auth/local/register", data);
+      const { status } = await axiosInstance.post("auth/local/register", data);
 
       if (status === 200) {
         toast.success(

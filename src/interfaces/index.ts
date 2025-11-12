@@ -33,6 +33,22 @@ export interface IErrorResponse {
 
 export interface ITodo {
   id: number;
+   documentId?: string;
   title: string;
   description: string;
+   validation: {
+    required?: boolean;
+    minLength?: number;
+  };
+
+}
+export interface updateU {
+  name: "email" | "username";
+  placeholder: string;
+  type: string;
+  validation: {
+    required?: boolean;
+    minLength?: number;
+    pattern?: RegExp;
+  };
 }
